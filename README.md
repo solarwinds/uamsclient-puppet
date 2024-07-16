@@ -1,1 +1,78 @@
-# uamsclient-puppet
+# Puppet UAMS Client module
+
+The Puppet UAMS Client module installs and configures UAMS Client.
+
+## Table of Contents
+
+- [Puppet UAMS Client module](#puppet-uams-client-module)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Setup](#setup)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Parameters](#parameters)
+  - [Requirements](#requirements)
+    - [Dependencies:](#dependencies)
+  - [Contributing](#contributing)
+
+## Description
+
+The uamsclient Puppet module is designed to install and configure the SolarWinds Observability Agent on supported operating systems. This agent enables host monitoring, which collects data about the performance, stability, and overall health of your hosts. By utilizing this module, administrators can monitor both cloud-based virtual machines and standard servers, ensuring proactive issue resolution and service planning.
+
+## Setup
+
+To set up the uamsclient Puppet module, define the class with the necessary parameters to install and configure the SolarWinds Observability Agent on your host.
+
+### Installation
+To install the uamsclient module, you can use the following command:
+
+```bash
+puppet module install <module_name>
+```
+
+### Usage
+
+To install the UAMSClient agent using this module, you need to define the class uamsclient with the appropriate parameters. Below is an example of how to use this module to install the UAMS Client:
+
+```puppet
+class { 'uamsclient':
+    uams_access_token => '<uams_access_token>',
+    swo_url           => 'na-01.cloud.solarwinds.com',
+    uams_metadata     => 'role:host-monitoring',
+}
+```
+
+### Parameters
+ - `uams_access_token`: This is the access token required for authenticating with the UAMS service. You must replace '<uams_access_token>' with your actual UAMS access token.
+ - `swo_url`: This is the URL endpoint for the UAMS service. The default URL is 'na-01.cloud.solarwinds.com', but you can replace it with the appropriate URL for your region or service.
+ - `uams_metadata`: This is the metadata used for identifying the role and purpose of the host. To enable basic host monitoring, the uams_metadata variable should contain 'role:host-monitoring'.
+
+
+## Requirements
+
+* Puppet 7 or later
+
+SolarWinds Observability Agents work on most systems. The following lists the platforms that have been tested and verified to work with the Agents:
+
+ - Amazon Linux 2 and later
+ - CentOS 6 and later
+ - Debian 10 and later
+ - Fedora 32 and later
+ - Kali 2021 and later
+ - OpenSUSE 15 and later
+ - Oracle Linux 8 and later
+ - RedHat 7.1 and later
+ - Rocky Linux 8 and later
+ - SUSE Linux Enterprise Server 15 and later
+ - Ubuntu 18.04 and later
+
+More information about agent system requirements can be found [here](https://documentation.solarwinds.com/en/success_center/observability/content/system_requirements/host_requirements.htm).
+
+### Dependencies:
+
+ - puppetlabs-stdlib: >=4.25.0 <9.0.0
+
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.

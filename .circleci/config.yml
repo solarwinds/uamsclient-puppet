@@ -1,0 +1,52 @@
+version: 2.1
+
+jobs:
+  syntax-and-style:
+    docker:
+      - image: cimg/ruby:3.3
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: bundle install
+      - run:
+          name: Run Puppet lint
+          command: bundle exec rake lint
+      - run:
+          name: Run Puppet metadata lint
+          command: bundle exec rake metadata_lint
+      - run:
+          name: Run Puppet spec
+          command: bundle exec rake spec
+      - run:
+          name: Run Puppet rubocop
+          command: bundle exec rake rubocop
+      - run:
+          name: Run Puppet syntax
+          command: bundle exec rake syntax
+  acceptance-tests:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: bundle install
+      - run:
+          name: Run Provision with 
+          command: bundle exec rake 'litmus:provision_list[release_checks]'
+      - run:
+          name: Install Puppet Agent
+          command: bundle exec rake litmus:install_agent  
+      - run:
+          name: Install modules
+          command: bundle exec rake litmus:install_module
+      - run:
+          name: Run acceptance tests
+          command: bundle exec rake litmus:acceptance:parallel
+ 
+workflows:
+  test-and-uamsclient-puppet: 
+    jobs:
+      - syntax-and-style
+      - acceptance-tests
