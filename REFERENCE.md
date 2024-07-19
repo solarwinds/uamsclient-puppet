@@ -10,6 +10,7 @@
 * [`uamsclient::container`](#uamsclient--container): Class for preparing container environment for tests
 * [`uamsclient::params`](#uamsclient--params): Class containing default settings according to operating system
 * [`uamsclient::set_package_manager`](#uamsclient--set_package_manager): Class for determining the package manager and package type for the OS.
+* [`uamsclient::uninstall`](#uamsclient--uninstall): Class for UAMS Client uninstallation
 * [`uamsclient::validate_inputs`](#uamsclient--validate_inputs): Class for validation user inputs
 
 ### Defined types
@@ -110,6 +111,33 @@ Class containing default settings according to operating system
 ### <a name="uamsclient--set_package_manager"></a>`uamsclient::set_package_manager`
 
 Class for determining the package manager and package type for the OS.
+
+### <a name="uamsclient--uninstall"></a>`uamsclient::uninstall`
+
+Class for UAMS Client uninstallation
+
+#### Parameters
+
+The following parameters are available in the `uamsclient::uninstall` class:
+
+* [`uams_local_pkg_path`](#-uamsclient--uninstall--uams_local_pkg_path)
+* [`dev_container_test`](#-uamsclient--uninstall--dev_container_test)
+
+##### <a name="-uamsclient--uninstall--uams_local_pkg_path"></a>`uams_local_pkg_path`
+
+Data type: `String[1]`
+
+Path to temporary UAMS directory
+
+Default value: `$uamsclient::params::uams_local_pkg_path`
+
+##### <a name="-uamsclient--uninstall--dev_container_test"></a>`dev_container_test`
+
+Data type: `Boolean`
+
+Indicates if it is a container installation
+
+Default value: `$uamsclient::params::dev_container_test`
 
 ### <a name="uamsclient--validate_inputs"></a>`uamsclient::validate_inputs`
 
