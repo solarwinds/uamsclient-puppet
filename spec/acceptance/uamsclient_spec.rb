@@ -31,4 +31,35 @@ describe 'uamsclient class' do
       it { is_expected.to be_executable }
     end
   end
+
+  context 'when uninstalling uamsclient' do
+    let(:uninstall_manifest) do
+      <<-EOS
+      class { 'uamsclient::uninstall':
+        dev_container_test => true,
+      }
+      EOS
+    end
+
+    it 'applies the uninstall manifest without error' do
+      apply_manifest(uninstall_manifest, catch_failures: false)
+    end
+
+    it 'is idempotent during uninstall' do
+      apply_manifest(uninstall_manifest, catch_changes: true)
+    end
+
+    describe package('uamsclient') do
+      it { is_expected.not_to be_installed }
+    end
+
+    describe file('/opt/solarwinds/uamsclient/sbin/uamsclient') do
+      it { is_expected.not_to exist }
+    end
+
+    describe service('uamsclient') do
+      it { is_expected.not_to be_running }
+      it { is_expected.not_to be_enabled }
+    end
+  end
 end

@@ -8,9 +8,11 @@ The Puppet UAMS Client module installs and configures UAMS Client.
   - [Table of Contents](#table-of-contents)
   - [Description](#description)
   - [Setup](#setup)
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Parameters](#parameters)
+    - [Module Installation](#module-installation)
+  - [Usage](#usage)
+    - [UAMS Client Installation](#uams-client-installation)
+      - [Parameters](#parameters)
+    - [UAMS Client Uninstallation](#uams-client-uninstallation)
   - [Requirements](#requirements)
     - [Dependencies:](#dependencies)
   - [Contributing](#contributing)
@@ -23,14 +25,18 @@ The uamsclient Puppet module is designed to install and configure the SolarWinds
 
 To set up the uamsclient Puppet module, define the class with the necessary parameters to install and configure the SolarWinds Observability Agent on your host.
 
-### Installation
+### Module Installation
 To install the uamsclient module, you can use the following command:
 
 ```bash
 puppet module install <module_name>
 ```
 
-### Usage
+## Usage
+
+Usage of UAMS Client puppet module.
+
+### UAMS Client Installation
 
 To install the UAMSClient agent using this module, you need to define the class uamsclient with the appropriate parameters. Below is an example of how to use this module to install the UAMS Client:
 
@@ -42,11 +48,18 @@ class { 'uamsclient':
 }
 ```
 
-### Parameters
+#### Parameters
  - `uams_access_token`: This is the access token required for authenticating with the UAMS service. You must replace '<uams_access_token>' with your actual UAMS access token.
  - `swo_url`: This is the URL endpoint for the UAMS service. The default URL is 'na-01.cloud.solarwinds.com', but you can replace it with the appropriate URL for your region or service.
  - `uams_metadata`: This is the metadata used for identifying the role and purpose of the host. To enable basic host monitoring, the uams_metadata variable should contain 'role:host-monitoring'.
 
+### UAMS Client Uninstallation
+
+If you need to uninstall the UAMSClient agent, you can use the uamsclient::uninstall class. This class will remove the UAMSClient package and ensure that related files and services are no longer present on the system. Below is an example of how to use this module to uninstall the UAMS Client:
+
+```puppet
+class { 'uamsclient::uninstall': }
+```
 
 ## Requirements
 
