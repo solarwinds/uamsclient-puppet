@@ -1,5 +1,5 @@
 .git/
-.vscode
+.vscode/
 .*.sw[op]
 .metadata
 .yardoc

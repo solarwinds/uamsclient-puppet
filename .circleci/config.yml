@@ -44,9 +44,55 @@ jobs:
       - run:
           name: Run acceptance tests
           command: bundle exec rake litmus:acceptance:parallel
- 
+  release-to-puppet-forge:
+    docker:
+      - image: cimg/ruby:3.3
+    steps:
+      - checkout
+      - run:
+          name: Compare Tag Version with Metadata Version
+          command: |
+            METADATA_VERSION=$(jq --raw-output .version metadata.json)
+            TAG_VERSION=$(git describe --tags --exact-match 2>/dev/null)
+            TAG=${TAG_VERSION#v}
+
+            echo "Metadata version: $METADATA_VERSION"
+            echo "Tag version: $TAG"
+
+            if [ "$METADATA_VERSION" != "$TAG" ]; then
+              echo "Version mismatch! Metadata version ($METADATA_VERSION) does not match tag version ($TAG)"
+              exit 1
+            else
+              echo "Versions match. Proceeding with the build."
+            fi
+      - run:
+          name: Install dependencies
+          command: bundle install
+      - run :
+          name: Install PDK
+          command: |
+            wget https://apt.puppet.com/puppet-tools-release-jammy.deb
+            sudo dpkg -i puppet-tools-release-jammy.deb
+            sudo apt-get update
+            sudo apt-get install pdk
+      - run:
+          name: Release puppet module
+          command: pdk release --forge-token ${FORGE_API_KEY} --force --skip-changelog
+
+
 workflows:
-  test-and-uamsclient-puppet: 
+  test-and-release-uamsclient-puppet:
     jobs:
       - syntax-and-style
       - acceptance-tests
+      - release-to-puppet-forge:
+          requires:
+            - syntax-and-style
+            - acceptance-tests
+          context:
+            - uams-puppet-forge
+          filters:
+            tags:
+              only: /^v?[0-9]+\.[0-9]+\.[0-9]+$/
+            branches:
+              only: main
