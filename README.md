@@ -52,6 +52,7 @@ class { 'uamsclient':
  - `uams_access_token`: This is the access token required for authenticating with the UAMS service. You must replace '<uams_access_token>' with your actual UAMS access token.
  - `swo_url`: This is the URL endpoint for the UAMS service. The default URL is 'na-01.cloud.solarwinds.com', but you can replace it with the appropriate URL for your region or service.
  - `uams_metadata`: This is the metadata used for identifying the role and purpose of the host. To enable basic host monitoring, the uams_metadata variable should contain 'role:host-monitoring'.
+ - `uams_override_hostname`: A customer client hostname (optional). It is required if you want to set a specific agent hostname. 
 
 ### UAMS Client Uninstallation
 

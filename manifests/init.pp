@@ -18,6 +18,8 @@
 #   SWO URL to the desired endpoint
 # @param uams_metadata
 #   UAMS Client installation metadata
+# @param uams_override_hostname
+#   A customer client hostname. It is required if you want to set a specific agent hostname.
 class uamsclient (
   String[1] $uams_local_pkg_path      = $uamsclient::params::uams_local_pkg_path,
   String[1] $install_pkg_url          = $uamsclient::params::install_pkg_url,
@@ -25,9 +27,10 @@ class uamsclient (
   String[1] $uamsclient_work_dir      = $uamsclient::params::uamsclient_work_dir,
   String[1] $uamsclient_ctl           = $uamsclient::params::uamsclient_ctl,
 
-  String[1] $uams_access_token        = undef,
-  String[1] $swo_url                  = undef,
-  Optional[String[1]] $uams_metadata  = undef,
+  String[1] $uams_access_token                 = undef,
+  String[1] $swo_url                           = undef,
+  Optional[String[1]] $uams_metadata           = undef,
+  Optional[String[1]] $uams_override_hostname  = undef,
 
 ) inherits uamsclient::params {
   include stdlib
@@ -86,6 +89,19 @@ class uamsclient (
     ],
   }
 
+  exec { 'set_override_hostname':
+    command   => "${uamsclient_ctl} set-override-hostname -work-dir ${uamsclient_work_dir} -hostname ${uams_override_hostname}",
+    logoutput => true,
+    path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
+    require   => [
+      Package['uamsclient'],
+    ],
+    unless    => [
+      "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q -E \"override-hostname: ${uams_override_hostname}$\"",
+      "[ -z '${uams_override_hostname}']",
+    ],
+  }
+
   package { 'uamsclient':
     ensure   => 'installed',
     source   => "${uams_local_pkg_path}/uamsclient.${pkg_type}",
@@ -104,6 +120,7 @@ class uamsclient (
         Exec['set_swo_url'],
         Exec['set_access_token'],
         Exec['set_metadata'],
+        Exec['set_override_hostname'],
       ],
     }
   }
