@@ -35,6 +35,7 @@ The following parameters are available in the `uamsclient` class:
 * [`uams_access_token`](#-uamsclient--uams_access_token)
 * [`swo_url`](#-uamsclient--swo_url)
 * [`uams_metadata`](#-uamsclient--uams_metadata)
+* [`uams_override_hostname`](#-uamsclient--uams_override_hostname)
 
 ##### <a name="-uamsclient--uams_local_pkg_path"></a>`uams_local_pkg_path`
 
@@ -97,6 +98,14 @@ Default value: `undef`
 Data type: `Optional[String[1]]`
 
 UAMS Client installation metadata
+
+Default value: `undef`
+
+##### <a name="-uamsclient--uams_override_hostname"></a>`uams_override_hostname`
+
+Data type: `Optional[String[1]]`
+
+Optional variable to set a custom Agent name. By default, Agent name is set to the hostname.
 
 Default value: `undef`
 
