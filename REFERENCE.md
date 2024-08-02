@@ -105,7 +105,7 @@ Default value: `undef`
 
 Data type: `Optional[String[1]]`
 
-A customer client hostname. It is required if you want to set a specific agent hostname.
+Optional variable to set a custom Agent name. By default, Agent name is set to the hostname.
 
 Default value: `undef`
 

@@ -19,7 +19,7 @@
 # @param uams_metadata
 #   UAMS Client installation metadata
 # @param uams_override_hostname
-#   A customer client hostname. It is required if you want to set a specific agent hostname.
+#   Optional variable to set a custom Agent name. By default, Agent name is set to the hostname.
 class uamsclient (
   String[1] $uams_local_pkg_path      = $uamsclient::params::uams_local_pkg_path,
   String[1] $install_pkg_url          = $uamsclient::params::install_pkg_url,
