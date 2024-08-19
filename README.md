@@ -29,7 +29,7 @@ To set up the uamsclient Puppet module, define the class with the necessary para
 To install the uamsclient module, you can use the following command:
 
 ```bash
-puppet module install <module_name>
+puppet module install solarwinds-uamsclient
 ```
 
 ## Usage
@@ -84,7 +84,7 @@ More information about agent system requirements can be found [here](https://doc
 
 ### Dependencies:
 
- - puppetlabs-stdlib: >=4.25.0 <9.0.0
+ - puppetlabs-stdlib: >=4.25.0 <10.0.0
 
 
 ## Contributing

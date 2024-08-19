@@ -1,14 +1,16 @@
 {
   "name": "solarwinds-uamsclient",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Solarwinds",
   "summary": "Puppet module for UAMS Client installation",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "source": "https://github.com/solarwinds/uamsclient-module.git",
+  "project_page": "https://github.com/solarwinds/uamsclient-puppet",
+  "issues_url": "https://github.com/solarwinds/uamsclient-puppet/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">=4.25.0 <9.0.0"
+      "version_requirement": ">=4.25.0 <10.0.0"
     }
   ],
   "operatingsystem_support": [
