@@ -1,5 +1,9 @@
 version: 2.1
 
+filters: &filters-test-jobs
+  tags:
+    only: /.*/
+
 jobs:
   syntax-and-style:
     docker:
@@ -79,12 +83,13 @@ jobs:
           name: Release puppet module
           command: pdk release --forge-token ${FORGE_API_KEY} --force --skip-changelog
 
-
 workflows:
   test-and-release-uamsclient-puppet:
     jobs:
-      - syntax-and-style
-      - acceptance-tests
+      - syntax-and-style:
+          filters: *filters-test-jobs
+      - acceptance-tests:
+          filters: *filters-test-jobs
       - release-to-puppet-forge:
           requires:
             - syntax-and-style
@@ -92,7 +97,7 @@ workflows:
           context:
             - uams-puppet-forge
           filters:
-            tags:
-              only: /^v?[0-9]+\.[0-9]+\.[0-9]+$/
             branches:
               ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
