@@ -1,5 +1,9 @@
 version: 2.1
 
+filters: &filters-test-jobs
+  tags:
+    only: /.*/
+
 jobs:
   syntax-and-style:
     docker:
@@ -83,8 +87,10 @@ jobs:
 workflows:
   test-and-release-uamsclient-puppet:
     jobs:
-      - syntax-and-style
-      - acceptance-tests
+      - syntax-and-style:
+          filters: *filters-test-jobs
+      - acceptance-tests:
+          filters: *filters-test-jobs
       - release-to-puppet-forge:
           requires:
             - syntax-and-style
@@ -95,5 +101,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only:
-                - /^v.*/  # Matches tags like v1.0.0, v2.0, etc.
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
