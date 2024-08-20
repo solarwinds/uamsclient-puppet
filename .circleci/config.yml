@@ -83,7 +83,6 @@ jobs:
           name: Release puppet module
           command: pdk release --forge-token ${FORGE_API_KEY} --force --skip-changelog
 
-
 workflows:
   test-and-release-uamsclient-puppet:
     jobs:
