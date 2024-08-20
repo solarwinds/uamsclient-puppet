@@ -93,7 +93,7 @@ workflows:
             - uams-puppet-forge
           filters:
             branches:
-              only: /.*/
+              ignore: /.*/
             tags:
               only:
-                - /^v?[0-9]+\.[0-9]+\.[0-9]+$/
+                - /^v.*/  # Matches tags like v1.0.0, v2.0, etc.
