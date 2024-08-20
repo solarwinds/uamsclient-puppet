@@ -97,3 +97,4 @@ workflows:
             tags:
               only:
                 - /^v.*/  # Matches tags like v1.0.0, v2.0, etc.
+                -
