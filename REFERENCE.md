@@ -36,6 +36,8 @@ The following parameters are available in the `uamsclient` class:
 * [`swo_url`](#-uamsclient--swo_url)
 * [`uams_metadata`](#-uamsclient--uams_metadata)
 * [`uams_override_hostname`](#-uamsclient--uams_override_hostname)
+* [`uams_managed_locally`](#-uamsclient--uams_managed_locally)
+* [`local_config_template_parameters`](#-uamsclient--local_config_template_parameters)
 
 ##### <a name="-uamsclient--uams_local_pkg_path"></a>`uams_local_pkg_path`
 
@@ -108,6 +110,22 @@ Data type: `Optional[String[1]]`
 Optional variable to set a custom Agent name. By default, Agent name is set to the hostname.
 
 Default value: `undef`
+
+##### <a name="-uamsclient--uams_managed_locally"></a>`uams_managed_locally`
+
+Data type: `Optional[Boolean]`
+
+Optional variable is used to set Agent as managed locally by configuration file.
+
+Default value: `undef`
+
+##### <a name="-uamsclient--local_config_template_parameters"></a>`local_config_template_parameters`
+
+Data type: `Optional[Hash]`
+
+Optional variable to set a hash with variables used to fill local config template file.
+
+Default value: `{ }`
 
 ### <a name="uamsclient--container"></a>`uamsclient::container`
 

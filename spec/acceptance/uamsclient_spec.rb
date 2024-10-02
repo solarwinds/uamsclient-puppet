@@ -9,6 +9,8 @@ describe 'uamsclient class' do
         swo_url            => 'na-01.st-ssp.solarwinds.com',
         uams_metadata      => 'role:host-monitoring',
         dev_container_test => true,
+        uams_managed_locally => true,
+        local_config_template_parameters => { 'uams_user' => 'pipipi'},
       }
       EOS
     end

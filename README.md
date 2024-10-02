@@ -54,6 +54,33 @@ class { 'uamsclient':
  - `uams_metadata`: This is the metadata used for identifying the role and purpose of the host. To enable basic host monitoring, the uams_metadata variable should contain 'role:host-monitoring'.
  - `uams_override_hostname`: Optional variable to set a custom Agent name. By default, Agent name is set to the hostname.
 
+### Managed locally Agents
+Variable `uams_managed_locally` is used to set Agent as managed locally by configuration file. 
+Is designed to allow configuration of the UAMS Agent locally, without necessity of adding integrations manually from SWO page.
+
+If the UAMS Agent gets installed as a **managed locally** agent then it will wait for the local configuration file to be accessible. The default local configuration is `/opt/solarwinds/uamsclient/var/local_config.yaml`
+
+Puppet will automatically copy the file to the needed location. 
+The default template of local config file is located at `templates/local_config.yaml.epp`.
+
+You can use puppet template syntax to fill the template with appropriate variables.
+To assign values to variables in the template you can fill the Hash type variable `local_config_template_parameters` as in the example below.
+
+```puppet
+class { 'uamsclient':
+    uams_access_token                  => '<uams_access_token>',
+    swo_url                            => 'na-01.cloud.solarwinds.com',
+    uams_metadata                      => 'role:host-monitoring',
+    local_config_template_parameters   => {
+      mysql_host  =>  'test_mysql_host',
+      user        =>  'test_mysql_user',
+  }
+}
+```
+
+To learn more about building the appropriate local config, check out the official documentation
+
+
 ### UAMS Client Uninstallation
 
 If you need to uninstall the UAMSClient agent, you can use the uamsclient::uninstall class. This class will remove the UAMSClient package and ensure that related files and services are no longer present on the system. Below is an example of how to use this module to uninstall the UAMS Client:
