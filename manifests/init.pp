@@ -36,7 +36,7 @@ class uamsclient (
   Optional[String[1]] $uams_metadata                    = undef,
   Optional[String[1]] $uams_override_hostname           = undef,
   Optional[Boolean] $uams_managed_locally               = undef,
-  Optional[Hash] $local_config_template_parameters      = { },
+  Optional[Hash] $local_config_template_parameters      = undef,
 
 ) inherits uamsclient::params {
   include stdlib
@@ -108,108 +108,101 @@ class uamsclient (
     ],
   }
 
-case $pkg_manager {
-  'apt': {
-    exec { 'install_package_apt':
-      command     => "/usr/bin/apt-get install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
-      path        => ['/usr/bin', '/bin'],
-      environment => [
-        'UAMS_MANAGED_LOCALLY=true',
-      ],
-      unless      => 'dpkg -l | grep uamsclient',
-      require     => [
-        File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
-      ],
-      notify     => [
-        Exec["set_swo_url"],
-        Exec["set_metadata"],
-        Exec["set_access_token"],
-        Exec["set_override_hostname"],
-      ],
+  case $pkg_manager {
+    'apt': {
+      exec { 'install_package_apt':
+        command     => "/usr/bin/apt-get install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
+        path        => ['/usr/bin', '/bin'],
+        environment => [
+          'UAMS_MANAGED_LOCALLY=true',
+        ],
+        unless      => 'dpkg -l | grep uamsclient',
+        require     => [
+          File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
+        ],
+        notify      => [
+          Exec['set_swo_url'],
+          Exec['set_metadata'],
+          Exec['set_access_token'],
+          Exec['set_override_hostname'],
+        ],
+      }
+    }
+
+    'yum': {
+      exec { 'install_package_yum':
+        command     => "/usr/bin/yum install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
+        path        => ['/usr/bin', '/bin'],
+        environment => [
+          'UAMS_MANAGED_LOCALLY=true',
+        ],
+        unless      => 'rpm -q uamsclient',
+        require     => [
+          File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
+        ],
+        notify      => [
+          Exec['set_swo_url'],
+          Exec['set_metadata'],
+          Exec['set_access_token'],
+          Exec['set_override_hostname'],
+        ],
+      }
+    }
+
+    'dnf': {
+      exec { 'install_package_dnf':
+        command     => "/usr/bin/dnf install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
+        path        => ['/usr/bin', '/bin'],
+        environment => [
+          'UAMS_MANAGED_LOCALLY=true',
+        ],
+        unless      => 'rpm -q uamsclient',
+        require     => [
+          File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
+        ],
+        notify      => [
+          Exec['set_swo_url'],
+          Exec['set_metadata'],
+          Exec['set_access_token'],
+          Exec['set_override_hostname'],
+        ],
+      }
+    }
+
+    'rpm': {
+      exec { 'install_package_rpm':
+        command     => "/usr/bin/rpm -i ${uams_local_pkg_path}/uamsclient.${pkg_type}",
+        path        => ['/usr/bin', '/bin'],
+        environment => [
+          'UAMS_MANAGED_LOCALLY=true',
+        ],
+        unless      => 'rpm -q uamclient',
+        require     => [
+          File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
+        ],
+        notify      => [
+          Exec['set_swo_url'],
+          Exec['set_metadata'],
+          Exec['set_access_token'],
+          Exec['set_override_hostname'],
+        ],
+      }
+    }
+
+    default: {
+      fail("Unsupported package manager: ${pkg_manager}")
     }
   }
 
-  'yum': {
-    exec { 'install_package_yum':
-      command     => "/usr/bin/yum install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
-      path        => ['/usr/bin', '/bin'],
-      environment => [
-        'UAMS_MANAGED_LOCALLY=true',
-      ],
-      unless      => 'rpm -q uamsclient',
-      require     => [
-        File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
-      ],
-      notify     => [
-        Exec["set_swo_url"],
-        Exec["set_metadata"],
-        Exec["set_access_token"],
-        Exec["set_override_hostname"],
-      ],
+  if $uams_managed_locally {
+    file { '/opt/solarwinds/uamsclient/var/local_config.yaml':
+      ensure  => file,
+      owner   => 'swagent',
+      group   => 'swagent',
+      mode    => '0644',
+      content => epp('uamsclient/local_config.yaml.epp', $local_config_template_parameters),
     }
   }
-
-  'dnf': {
-    exec { 'install_package_dnf':
-      command     => "/usr/bin/dnf install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
-      path        => ['/usr/bin', '/bin'],
-      environment => [
-        'UAMS_MANAGED_LOCALLY=true',
-      ],
-      unless      => 'rpm -q uamsclient',
-      require     => [
-        File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
-      ],
-      notify     => [
-        Exec["set_swo_url"],
-        Exec["set_metadata"],
-        Exec["set_access_token"],
-        Exec["set_override_hostname"],
-      ],
-    }
-  }
-
-  'rpm': {
-    exec { 'install_package_rpm':
-      command     => "/usr/bin/rpm -i ${uams_local_pkg_path}/uamsclient.${pkg_type}",
-      path        => ['/usr/bin', '/bin'],
-      environment => [
-        'UAMS_MANAGED_LOCALLY=true',
-      ],
-      unless      => 'rpm -q uamclient',
-      require     => [
-        File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
-      ],
-      notify     => [
-        Exec["set_swo_url"],
-        Exec["set_metadata"],
-        Exec["set_access_token"],
-        Exec["set_override_hostname"],
-      ],
-    }
-  }
-
-  default: {
-    fail("Unsupported package manager: ${pkg_manager}")
-  }
-}
-
-
-if $uams_managed_locally {
-
-  file { '/opt/solarwinds/uamsclient/var/local_config.yaml':
-    ensure  => file,
-    owner   => 'swagent',
-    group   => 'swagent',
-    mode    => '0644',
-    content => epp('uamsclient/local_config.yaml.epp', $local_config_template_parameters),
-  }
-
-}
-
-
-
-
 
   unless $dev_container_test {
     service { 'uamsclient':
