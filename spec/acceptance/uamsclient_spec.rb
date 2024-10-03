@@ -1,6 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'uamsclient class' do
+
   context 'with specific parameters' do
     let(:manifest) do
       <<-EOS
@@ -9,8 +10,6 @@ describe 'uamsclient class' do
         swo_url            => 'na-01.st-ssp.solarwinds.com',
         uams_metadata      => 'role:host-monitoring',
         dev_container_test => true,
-        uams_managed_locally => true,
-        local_config_template_parameters => { 'uams_user' => 'pipipi'},
       }
       EOS
     end
@@ -64,4 +63,5 @@ describe 'uamsclient class' do
       it { is_expected.not_to be_enabled }
     end
   end
+
 end

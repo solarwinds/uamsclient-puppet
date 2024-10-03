@@ -66,9 +66,6 @@ class uamsclient (
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
     unless    => "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q ${swo_url}",
-    # require   => [
-    #   Package['uamsclient'],
-    # ],
   }
 
   exec { 'set_metadata':
@@ -76,9 +73,6 @@ class uamsclient (
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
     unless    => "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q ${uams_metadata}",
-    # require   => [
-    #   Package['uamsclient'],
-    # ],
   }
 
   exec { 'set_access_token':
@@ -90,18 +84,12 @@ class uamsclient (
       Exec['set_metadata'],
     ],
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    # require     => [
-    #   Package['uamsclient'],
-    # ],
   }
 
   exec { 'set_override_hostname':
     command   => "${uamsclient_ctl} set-override-hostname -work-dir ${uamsclient_work_dir} -hostname ${uams_override_hostname}",
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    # require   => [
-    #   Package['uamsclient'],
-    # ],
     unless    => [
       "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q -E \"override-hostname: ${uams_override_hostname}$\"",
       "[ -z '${uams_override_hostname}']",
@@ -114,9 +102,12 @@ class uamsclient (
         command     => "/usr/bin/apt-get install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
         path        => ['/usr/bin', '/bin'],
         environment => [
-          'UAMS_MANAGED_LOCALLY=true',
+          $uams_managed_locally ? {
+            true    => 'UAMS_MANAGED_LOCALLY=true',
+            default => 'UAMS_MANAGED_LOCALLY=',
+          }
         ],
-        unless      => 'dpkg -l | grep uamsclient',
+        unless      => 'dpkg-query -W -f=\'${Status}\' uamsclient | grep -q "install ok installed"',
         require     => [
           File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
         ],
@@ -134,7 +125,10 @@ class uamsclient (
         command     => "/usr/bin/yum install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
         path        => ['/usr/bin', '/bin'],
         environment => [
-          'UAMS_MANAGED_LOCALLY=true',
+          $uams_managed_locally ? {
+            true    => 'UAMS_MANAGED_LOCALLY=true',
+            default => 'UAMS_MANAGED_LOCALLY=',
+          }
         ],
         unless      => 'rpm -q uamsclient',
         require     => [
@@ -154,7 +148,10 @@ class uamsclient (
         command     => "/usr/bin/dnf install -y ${uams_local_pkg_path}/uamsclient.${pkg_type}",
         path        => ['/usr/bin', '/bin'],
         environment => [
-          'UAMS_MANAGED_LOCALLY=true',
+          $uams_managed_locally ? {
+            true    => 'UAMS_MANAGED_LOCALLY=true',
+            default => 'UAMS_MANAGED_LOCALLY=',
+          }
         ],
         unless      => 'rpm -q uamsclient',
         require     => [
@@ -174,7 +171,10 @@ class uamsclient (
         command     => "/usr/bin/rpm -i ${uams_local_pkg_path}/uamsclient.${pkg_type}",
         path        => ['/usr/bin', '/bin'],
         environment => [
-          'UAMS_MANAGED_LOCALLY=true',
+          $uams_managed_locally ? {
+            true    => 'UAMS_MANAGED_LOCALLY=true',
+            default => 'UAMS_MANAGED_LOCALLY=',
+          }
         ],
         unless      => 'rpm -q uamclient',
         require     => [
@@ -209,7 +209,6 @@ class uamsclient (
       ensure  => 'running',
       enable  => true,
       require => [
-        # Package['uamsclient'],
         Exec['set_swo_url'],
         Exec['set_access_token'],
         Exec['set_metadata'],
