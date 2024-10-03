@@ -8,7 +8,7 @@ release_checks:
     'litmusimage/centos:stream9',
     'litmusimage/centos:stream8',
     'litmusimage/oraclelinux:8',
-#    'litmusimage/oraclelinux:7',
+    'litmusimage/oraclelinux:9',
     'litmusimage/rockylinux:8',
     'litmusimage/redhat:7',
     'litmusimage/redhat:8',
@@ -20,5 +20,5 @@ release_checks:
     'litmusimage/debian:11',
     'litmusimage/debian:12',
     'litmusimage/fedora:36',
-#    'litmusimage/sles:15',
+    'litmusimage/sles:15',
 ]
