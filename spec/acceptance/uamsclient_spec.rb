@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'uamsclient class' do
-
   context 'with specific parameters' do
     let(:manifest) do
       <<-EOS
@@ -63,5 +62,4 @@ describe 'uamsclient class' do
       it { is_expected.not_to be_enabled }
     end
   end
-
 end
