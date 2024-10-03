@@ -105,7 +105,7 @@ class uamsclient (
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
             default => 'UAMS_MANAGED_LOCALLY=',
-          }
+          },
         ],
         unless      => 'dpkg-query -W -f=\'${Status}\' uamsclient | grep -q "install ok installed"',
         require     => [
@@ -128,7 +128,7 @@ class uamsclient (
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
             default => 'UAMS_MANAGED_LOCALLY=',
-          }
+          },
         ],
         unless      => 'rpm -q uamsclient',
         require     => [
@@ -151,7 +151,7 @@ class uamsclient (
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
             default => 'UAMS_MANAGED_LOCALLY=',
-          }
+          },
         ],
         unless      => 'rpm -q uamsclient',
         require     => [
@@ -174,7 +174,7 @@ class uamsclient (
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
             default => 'UAMS_MANAGED_LOCALLY=',
-          }
+          },
         ],
         unless      => 'rpm -q uamclient',
         require     => [
