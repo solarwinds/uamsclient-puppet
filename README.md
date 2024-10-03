@@ -71,6 +71,7 @@ class { 'uamsclient':
     uams_access_token                  => '<uams_access_token>',
     swo_url                            => 'na-01.cloud.solarwinds.com',
     uams_metadata                      => 'role:host-monitoring',
+    uams_managed_locally               => true,
     local_config_template_parameters   => {
       mysql_host  =>  'test_mysql_host',
       user        =>  'test_mysql_user',
