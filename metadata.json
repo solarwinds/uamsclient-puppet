@@ -1,6 +1,6 @@
 {
   "name": "solarwinds-uamsclient",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Solarwinds",
   "summary": "Puppet module for UAMS Client installation",
   "license": "MIT",
