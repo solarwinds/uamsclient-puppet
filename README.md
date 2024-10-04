@@ -56,7 +56,7 @@ class { 'uamsclient':
 
 ### Managed locally Agents
 The variable `uams_managed_locally` is used to configure the Agent to be managed locally through the configuration file 
-Is designed to allow configuration of the UAMS Agent locally, without necessity of adding integrations manually from SWO page.
+It is designed to allow configuration of the UAMS Agent locally, without necessity of adding integrations manually from SWO page.
 
 If the UAMS Agent gets installed as a **managed locally** agent then it will wait for the local configuration file to be accessible. The default local configuration is `/opt/solarwinds/uamsclient/var/local_config.yaml`
 
