@@ -21,7 +21,7 @@
 # @param uams_override_hostname
 #   Optional variable to set a custom Agent name. By default, Agent name is set to the hostname.
 # @param uams_managed_locally
-#   Optional variable is used to set Agent as managed locally by configuration file.
+#   Optional variable is used to set Agent as managed locally through configuration file.
 # @param local_config_template_parameters
 #   Optional variable to set a hash with variables used to fill local config template file.
 class uamsclient (
