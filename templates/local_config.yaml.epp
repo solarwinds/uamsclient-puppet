@@ -1,11 +1,14 @@
 # Example configuration file used with managed locally Agent
 integrations:
-  mysql:
+  dbo/mysql:
     - name: off-host-mysql
-      host: <%= $uams_host %>
+      host: <%= $mysql_host %>
       port: 3306
-      user: <%= $uams_user %>
-      password: "{{.creds.env.MYSQL_DB_PASWORD}}"
+      user: <%= $user %>
+      password:
+        value-from:
+        provider: aws-secrets-manager
+        secret-name: <%= $secret_name %>
       packet-capture-enabled: false
   otel/hostmetrics:
     - name: host-monitoring

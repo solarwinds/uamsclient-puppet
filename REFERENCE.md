@@ -38,6 +38,7 @@ The following parameters are available in the `uamsclient` class:
 * [`uams_override_hostname`](#-uamsclient--uams_override_hostname)
 * [`uams_managed_locally`](#-uamsclient--uams_managed_locally)
 * [`local_config_template_parameters`](#-uamsclient--local_config_template_parameters)
+* [`credentials_config_template_parameters`](#-uamsclient--credentials_config_template_parameters)
 
 ##### <a name="-uamsclient--uams_local_pkg_path"></a>`uams_local_pkg_path`
 
@@ -125,7 +126,15 @@ Data type: `Optional[Hash]`
 
 Optional variable to set a hash with variables used to fill local config template file.
 
-Default value: `{ }`
+Default value: `undef`
+
+##### <a name="-uamsclient--credentials_config_template_parameters"></a>`credentials_config_template_parameters`
+
+Data type: `Optional[Hash]`
+
+Optional variable to set a hash with variables used to fill credentials config template file.
+
+Default value: `undef`
 
 ### <a name="uamsclient--container"></a>`uamsclient::container`
 
