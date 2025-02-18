@@ -24,6 +24,8 @@
 #   Optional variable is used to set Agent as managed locally through configuration file.
 # @param local_config_template_parameters
 #   Optional variable to set a hash with variables used to fill local config template file.
+# @param credentials_config_template_parameters
+#   Optional variable to set a hash with variables used to fill credentials config template file.
 class uamsclient (
   String[1] $uams_local_pkg_path      = $uamsclient::params::uams_local_pkg_path,
   String[1] $install_pkg_url          = $uamsclient::params::install_pkg_url,
@@ -37,6 +39,7 @@ class uamsclient (
   Optional[String[1]] $uams_override_hostname           = undef,
   Optional[Boolean] $uams_managed_locally               = undef,
   Optional[Hash] $local_config_template_parameters      = undef,
+  Optional[Hash] $credentials_config_template_parameters = undef,
 
 ) inherits uamsclient::params {
   include stdlib
@@ -72,7 +75,7 @@ class uamsclient (
     command   => "${uamsclient_ctl} set-metadata -work-dir ${uamsclient_work_dir} -md ${uams_metadata}",
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    unless    => "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q ${uams_metadata}",
+    unless    => "[ -z '${uams_metadata}' ] || cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q ${uams_metadata}",
   }
 
   exec { 'set_access_token':
@@ -199,8 +202,15 @@ class uamsclient (
       ensure  => file,
       owner   => 'swagent',
       group   => 'swagent',
-      mode    => '0644',
+      mode    => '0660',
       content => epp('uamsclient/local_config.yaml.epp', $local_config_template_parameters),
+    }
+    file { '/opt/solarwinds/uamsclient/var/credentials_config.yaml':
+      ensure  => file,
+      owner   => 'swagent',
+      group   => 'swagent',
+      mode    => '0660',
+      content => epp('uamsclient/credentials_config.yaml.epp', $credentials_config_template_parameters),
     }
   }
 
