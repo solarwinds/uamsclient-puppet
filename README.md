@@ -84,7 +84,7 @@ class { 'uamsclient':
 }
 ```
 
-To learn more about building the appropriate local config, check out the official documentation.
+To learn more about building the appropriate local config and credentials config, check out the **[SolarWinds Observability documentation](https://documentation.solarwinds.com/en/success_center/observability/default.htm#cshid=app-agent-local-config)**. You can find information about deploying different plugins, integrations, and supported credential providers.
 
 ### UAMS Client Uninstallation
 
