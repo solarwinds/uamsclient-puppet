@@ -116,7 +116,7 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-Optional variable is used to set Agent as managed locally by configuration file.
+Optional variable is used to set Agent as managed locally through configuration file.
 
 Default value: `undef`
 
