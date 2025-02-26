@@ -110,7 +110,9 @@ class uamsclient (
             default => 'UAMS_MANAGED_LOCALLY=',
           },
         ],
+        # lint:ignore:single_quote_string_with_variables
         unless      => 'dpkg-query -W -f=\'${Status}\' uamsclient | grep -q "install ok installed"',
+        # lint:endignore
         require     => [
           File["${uams_local_pkg_path}/uamsclient.${pkg_type}"],
         ],
