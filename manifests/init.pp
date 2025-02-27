@@ -107,7 +107,7 @@ class uamsclient (
         environment => [
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
-            default => 'UAMS_MANAGED_LOCALLY=',
+            default => 'UAMS_MANAGED_LOCALLY=false',
           },
         ],
         # lint:ignore:single_quote_string_with_variables
@@ -132,7 +132,7 @@ class uamsclient (
         environment => [
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
-            default => 'UAMS_MANAGED_LOCALLY=',
+            default => 'UAMS_MANAGED_LOCALLY=false',
           },
         ],
         unless      => 'rpm -q uamsclient',
@@ -155,7 +155,7 @@ class uamsclient (
         environment => [
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
-            default => 'UAMS_MANAGED_LOCALLY=',
+            default => 'UAMS_MANAGED_LOCALLY=false',
           },
         ],
         unless      => 'rpm -q uamsclient',
@@ -178,7 +178,7 @@ class uamsclient (
         environment => [
           $uams_managed_locally ? {
             true    => 'UAMS_MANAGED_LOCALLY=true',
-            default => 'UAMS_MANAGED_LOCALLY=',
+            default => 'UAMS_MANAGED_LOCALLY=false',
           },
         ],
         unless      => 'rpm -q uamclient',
