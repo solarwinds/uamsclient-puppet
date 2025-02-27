@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.1.2
+
+**Fixed**
+
+ - Fixed warning when not using local config mode.
+
+
 ## Release 1.1.1
 
 **Features**
