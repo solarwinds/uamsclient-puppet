@@ -55,7 +55,7 @@ class { 'uamsclient':
  - `uams_override_hostname`: Optional variable to set a custom Agent name. By default, the Agent name is set to the hostname.
 
 ### Managed Locally Agents
-The variable `uams_managed_locally` is used to configure the Agent as managed locally through the configuration file. 
+The variable `uams_managed_locally` is used to configure the Agent as managed locally through the configuration file.
 It is designed to allow configuration of the UAMS Agent locally, without the necessity of adding integrations manually from the SWO page.
 
 If the UAMS Agent is installed as a **managed locally** agent, it will wait for the local configuration file to be accessible. The default local configuration is `/opt/solarwinds/uamsclient/var/local_config.yaml`.
