@@ -3,11 +3,12 @@
 class uamsclient::params {
   ### Operating System Configuration
   $_module_defaults = {
-    'uams_local_pkg_path'        => '/tmp/uams',
-    'install_pkg_url'            => 'https://agent-binaries.cloud.solarwinds.com/uams/latest',
-    'dev_container_test'         => false,
-    'uamsclient_work_dir'        => '/opt/solarwinds/uamsclient/etc/',
-    'uamsclient_ctl'             => '/opt/solarwinds/uamsclient/sbin/uamsclient-ctl',
+    'uams_local_pkg_path'          => '/tmp/uams',
+    'install_pkg_url'              => 'https://agent-binaries.cloud.solarwinds.com/uams/latest',
+    'dev_container_test'           => false,
+    'uamsclient_work_dir'          => '/opt/solarwinds/uamsclient/etc/',
+    'uamsclient_dynamic_config'    => '/opt/solarwinds/uamsclient/etc/dynamic_config.yaml',
+    'uamsclient_ctl'               => '/opt/solarwinds/uamsclient/sbin/uamsclient-ctl',
   }
 
   case $facts['os']['family'] {
@@ -34,6 +35,7 @@ class uamsclient::params {
   $install_pkg_url          = $_module_parameters['install_pkg_url']
   $dev_container_test       = $_module_parameters['dev_container_test']
   $uamsclient_work_dir      = $_module_parameters['uamsclient_work_dir']
+  $uamsclient_dynamic_config = $_module_parameters['uamsclient_dynamic_config']
   $uamsclient_ctl           = $_module_parameters['uamsclient_ctl']
   ### END Referenced Variables
 }

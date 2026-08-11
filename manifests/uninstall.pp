@@ -9,7 +9,7 @@ class uamsclient::uninstall (
   Boolean $dev_container_test    = $uamsclient::params::dev_container_test,
 ) inherits uamsclient::params {
   package { 'uamsclient':
-    ensure   => absent,
+    ensure => absent,
   }
 
   file { $uams_local_pkg_path:

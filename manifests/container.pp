@@ -4,7 +4,7 @@ class uamsclient::container {
 
   if $os_name in ['SLES',] {
     package { 'sudo':
-      ensure   => 'installed',
+      ensure => 'installed',
     }
   }
 }
