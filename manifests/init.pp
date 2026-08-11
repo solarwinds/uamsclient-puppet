@@ -10,6 +10,8 @@
 #   Indicates if it is a container installation
 # @param uamsclient_work_dir
 #   Path to UAMS Client workdir
+# @param uamsclient_dynamic_config
+#   Path to UAMS Client dynamic config file
 # @param uamsclient_ctl
 #   Path to uamsclient-ctl binary
 # @param uams_access_token
@@ -31,6 +33,7 @@ class uamsclient (
   String[1] $install_pkg_url          = $uamsclient::params::install_pkg_url,
   Boolean $dev_container_test         = $uamsclient::params::dev_container_test,
   String[1] $uamsclient_work_dir      = $uamsclient::params::uamsclient_work_dir,
+  String[1] $uamsclient_dynamic_config = $uamsclient::params::uamsclient_dynamic_config,
   String[1] $uamsclient_ctl           = $uamsclient::params::uamsclient_ctl,
 
   String[1] $uams_access_token                          = undef,
@@ -65,21 +68,21 @@ class uamsclient (
   }
 
   exec { 'set_swo_url':
-    command   => "${uamsclient_ctl} set-swo-url -work-dir ${uamsclient_work_dir} -url ${swo_url}",
+    command   => "${uamsclient_ctl} set-swo-url -dynamic-config ${uamsclient_dynamic_config} -url ${swo_url}",
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    unless    => "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q ${swo_url}",
+    unless    => "cat ${uamsclient_dynamic_config} | grep -q ${swo_url}",
   }
 
   exec { 'set_metadata':
-    command   => "${uamsclient_ctl} set-metadata -work-dir ${uamsclient_work_dir} -md ${uams_metadata}",
+    command   => "${uamsclient_ctl} set-metadata -dynamic-config ${uamsclient_dynamic_config} -md ${uams_metadata}",
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    unless    => "[ -z '${uams_metadata}' ] || cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q ${uams_metadata}",
+    unless    => "[ -z '${uams_metadata}' ] || cat ${uamsclient_dynamic_config} | grep -q ${uams_metadata}",
   }
 
   exec { 'set_access_token':
-    command     => "${uamsclient_ctl} set-access-token -work-dir ${uamsclient_work_dir} -token ${uams_access_token}",
+    command     => "${uamsclient_ctl} set-access-token -dynamic-config ${uamsclient_dynamic_config} -token ${uams_access_token}",
     logoutput   => true,
     refreshonly => true,
     subscribe   => [
@@ -90,12 +93,12 @@ class uamsclient (
   }
 
   exec { 'set_override_hostname':
-    command   => "${uamsclient_ctl} set-override-hostname -work-dir ${uamsclient_work_dir} -hostname ${uams_override_hostname}",
+    command   => "${uamsclient_ctl} set-override-hostname -dynamic-config ${uamsclient_dynamic_config} -hostname ${uams_override_hostname}",
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
     unless    => [
-      "cat ${uamsclient_work_dir}/dynamic_config.yaml | grep -q -E \"override-hostname: ${uams_override_hostname}$\"",
-      "[ -z '${uams_override_hostname}']",
+      "cat ${uamsclient_dynamic_config} | grep -q -E \"override-hostname: ${uams_override_hostname}$\"",
+      "[ -z '${uams_override_hostname}' ]",
     ],
   }
 

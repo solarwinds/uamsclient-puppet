@@ -31,6 +31,7 @@ The following parameters are available in the `uamsclient` class:
 * [`install_pkg_url`](#-uamsclient--install_pkg_url)
 * [`dev_container_test`](#-uamsclient--dev_container_test)
 * [`uamsclient_work_dir`](#-uamsclient--uamsclient_work_dir)
+* [`uamsclient_dynamic_config`](#-uamsclient--uamsclient_dynamic_config)
 * [`uamsclient_ctl`](#-uamsclient--uamsclient_ctl)
 * [`uams_access_token`](#-uamsclient--uams_access_token)
 * [`swo_url`](#-uamsclient--swo_url)
@@ -71,6 +72,14 @@ Data type: `String[1]`
 Path to UAMS Client workdir
 
 Default value: `$uamsclient::params::uamsclient_work_dir`
+
+##### <a name="-uamsclient--uamsclient_dynamic_config"></a>`uamsclient_dynamic_config`
+
+Data type: `String[1]`
+
+Path to UAMS Client dynamic config file
+
+Default value: `$uamsclient::params::uamsclient_dynamic_config`
 
 ##### <a name="-uamsclient--uamsclient_ctl"></a>`uamsclient_ctl`
 

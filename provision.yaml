@@ -4,13 +4,11 @@ release_checks:
   images: [
     'litmusimage/amazonlinux:2023',
     'litmusimage/amazonlinux:2',
-    'litmusimage/centos:7',
     'litmusimage/centos:stream9',
     'litmusimage/centos:stream8',
     'litmusimage/oraclelinux:8',
     'litmusimage/oraclelinux:9',
     'litmusimage/rockylinux:8',
-    'litmusimage/redhat:7',
     'litmusimage/redhat:8',
     'litmusimage/redhat:9',
     'litmusimage/ubuntu:20.04',
@@ -19,5 +17,4 @@ release_checks:
     'litmusimage/debian:10',
     'litmusimage/debian:11',
     'litmusimage/debian:12',
-    'litmusimage/fedora:36',
 ]
