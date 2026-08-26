@@ -74,11 +74,17 @@ class uamsclient (
     unless    => "cat ${uamsclient_dynamic_config} | grep -q ${swo_url}",
   }
 
+  $provisioner_tag = 'provisioner:puppet'
+  $combined_metadata = $uams_metadata ? {
+    undef   => $provisioner_tag,
+    default => "${uams_metadata},${provisioner_tag}",
+  }
+
   exec { 'set_metadata':
-    command   => "${uamsclient_ctl} set-metadata -dynamic-config ${uamsclient_dynamic_config} -md ${uams_metadata}",
+    command   => "${uamsclient_ctl} set-metadata -dynamic-config ${uamsclient_dynamic_config} -md ${combined_metadata}",
     logoutput => true,
     path      => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    unless    => "[ -z '${uams_metadata}' ] || cat ${uamsclient_dynamic_config} | grep -q ${uams_metadata}",
+    unless    => "cat ${uamsclient_dynamic_config} | grep -q ${provisioner_tag}",
   }
 
   exec { 'set_access_token':
