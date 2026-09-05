@@ -1,4 +1,4 @@
-# Puppet UAMS Client Module
+# Puppet UAMS Client Module Test
 
 The Puppet UAMS Client module installs and configures the UAMS Client.
 
