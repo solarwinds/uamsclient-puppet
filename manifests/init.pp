@@ -226,6 +226,12 @@ class uamsclient (
   }
 
   unless $dev_container_test {
+    exec { 'reset-failed-uamsclient':
+      command => '/bin/systemctl reset-failed uamsclient',
+      onlyif  => '/bin/systemctl is-failed uamsclient',
+      path    => ['/bin', '/usr/bin'],
+    }
+
     service { 'uamsclient':
       ensure  => 'running',
       enable  => true,
@@ -234,6 +240,7 @@ class uamsclient (
         Exec['set_access_token'],
         Exec['set_metadata'],
         Exec['set_override_hostname'],
+        Exec['reset-failed-uamsclient'],
       ],
     }
   }
