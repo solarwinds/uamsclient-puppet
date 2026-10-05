@@ -1,6 +1,13 @@
 # @summary Class containing default settings according to operating system
 #
 class uamsclient::params {
+  ### Support-check messages
+  $product_name = 'SolarWinds UAMS Client'
+  $agent_requirements_docs_url = 'https://documentation.solarwinds.com/en/success_center/observability/content/system_requirements/agent_requirements.htm'
+  $unsupported_os_msg = "The ${product_name} does not support your operating system. Supported operating systems are defined in the official documentation: ${agent_requirements_docs_url}"
+  $unsupported_os_version_msg = "This operating system version is not supported. Supported operating system versions are defined in the official documentation: ${agent_requirements_docs_url}"
+  ### END Support-check messages
+
   ### Operating System Configuration
   $_module_defaults = {
     'uams_local_pkg_path'          => '/tmp/uams',

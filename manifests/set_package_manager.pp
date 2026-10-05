@@ -1,6 +1,6 @@
 # @summary Class for determining the package manager and package type for the OS.
 #
-class uamsclient::set_package_manager {
+class uamsclient::set_package_manager inherits uamsclient::params {
   $os_family = $facts['os']['family']
   $os_name = $facts['os']['name']
   $os_release = $facts['os']['release']['full']
@@ -27,10 +27,10 @@ class uamsclient::set_package_manager {
       $pkg_manager = 'yum'
       # $command_if_uams_installed = 'yum list | grep uamsclient | awk \'{print $2}\' | cut -f1 -d-'
     } else {
-      fail("Could not determine installation package manager for ${os_name} ${os_version}.")
+      fail($uamsclient::params::unsupported_os_version_msg)
     }
   } else {
-    fail("Unsupported OS: ${os_name} ${os_version}.")
+    fail($uamsclient::params::unsupported_os_msg)
   }
 
   # notify { 'Package Manager Detection':
